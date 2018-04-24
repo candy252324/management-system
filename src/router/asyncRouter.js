@@ -9,7 +9,7 @@ export default [
       {
         path:"role",
         name:"role",
-        component:resolve => require(['@/views/role'], resolve),
+        component:resolve => require(['@/views/base/role'], resolve),
       }
     ]
   },
@@ -20,7 +20,7 @@ export default [
       {
         path:"user",
         name:"user",
-        component:resolve => require(['@/views/user'], resolve),
+        component:resolve => require(['@/views/base/user'], resolve),
       }
     ]
   },
