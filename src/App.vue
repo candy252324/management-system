@@ -5,11 +5,12 @@
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  import icons from './assets/icons'
+  export default {
+    name: 'App',
+    created: function() {
+      document.body.insertAdjacentHTML('afterbegin', icons)
+    },
+  }
 </script>
 
-<style lang="scss">
-
-</style>

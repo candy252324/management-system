@@ -4,26 +4,18 @@ import Layout from "@/views/layout"
 export default [
   {
     path:"",
-    name:"layout",
     component:Layout,
     children:[
       {
-        path:"role",
-        name:"role",
-        component:resolve => require(['@/views/role'], resolve),
+        path:"dashboard",
+        name:"dashboard",
+        component:resolve => require(['@/views/dashboard'], resolve),
       }
     ]
   },
   {
-    path:"",
-    name:"layout",
-    component:Layout,
-    children:[
-      {
-        path:"user",
-        name:"user",
-        component:resolve => require(['@/views/user'], resolve),
-      }
-    ]
-  },
+    path:"/login",
+    name:"login",
+    component:resolve => require(['@/views/login'], resolve),
+  }
 ]
