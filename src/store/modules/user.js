@@ -1,6 +1,6 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { login,getUserInfo,logout } from '@/api/login'
-import {changePsw,submitForm} from '@/api/user'
+import {changePsw,submitForm} from '@/api/account'
 
 export default{
   state: {

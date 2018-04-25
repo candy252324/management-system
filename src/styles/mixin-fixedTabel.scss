@@ -1,0 +1,47 @@
+//固定表头，且分页在底部
+@mixin fixed-table {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  top:0px;
+  >.el-table{
+    position: absolute;
+    left: 0;
+    right:0;
+    top:60px;
+    bottom: 60px;
+    overflow: hidden;
+    .el-table__body-wrapper{
+      position: absolute;
+      left: 0;
+      right:0;
+      top:60px;
+      bottom: 0px;
+      overflow-y: auto;
+    }
+    //保证表格左侧固定列时，能正常滚动
+    .el-table__fixed .el-table__fixed-body-wrapper{
+      position: absolute;
+      left: 0;
+      right:auto;
+      top:60px;
+      bottom: 0px;
+    }
+    //保证表格右侧固定列时，能正常滚动
+    .el-table__fixed-right .el-table__fixed-body-wrapper{
+      position: absolute;
+      left: auto;
+      right:0;
+      top:60px;
+      bottom: 0px;
+      overflow-y: auto;
+    }
+  }
+  .pagination-container{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right:0;
+  }
+}

@@ -1,0 +1,235 @@
+//用于覆盖部分element-ui的样式
+
+/* button
+---------------------------- */
+.el-button{
+  font-size: $g-font-size-medium !important;
+}
+
+/* radio
+---------------------------- */
+.el-radio{
+  .el-radio__label{
+    font-size: $g-font-size-base !important;
+  }
+  .el-radio__inner{
+    width:18px!important;
+    height: 18px!important;
+  }
+}
+.el-radio.is-disabled{
+  .el-radio__label  {
+    color:$g-disabled-text-color !important;
+  }
+  .el-radio__inner::after{
+    background:$g-disabled-text-color !important;
+  }
+}
+.el-radio-group{
+  .el-radio-button__inner{
+    font-size: $g-font-size-base !important;
+  }
+}
+
+/* switch
+---------------------------- */
+.el-switch{
+  .el-switch__label span{
+    font-size: $g-font-size-base!important;
+  }
+}
+
+/* checkbox
+---------------------------- */
+.el-checkbox{
+  .el-checkbox__input{
+    vertical-align: -2px;
+    .el-checkbox__inner{
+      width:18px;
+      height: 18px;
+      &::after{
+        left:6px;
+        top:3px;
+      }
+    }
+  }
+  .el-checkbox__input.is-checked{
+    .el-checkbox__inner{
+      &::after{
+        transform:rotate(45deg) scaleY(1.5);
+      }
+    }
+  }
+  .el-checkbox__label{
+    font-size: $g-font-size-base!important;
+  }
+}
+.el-checkbox.is-disabled{
+  .el-checkbox__label{
+    color: $g-disabled-text-color !important;
+  }
+  &.is-checked{
+    .el-checkbox__inner::after{
+      border-color:$g-disabled-text-color !important;
+    }
+  }
+}
+
+
+
+
+/* input
+---------------------------- */
+.el-input,
+.el-textarea{
+  font-size: $g-font-size-medium !important;
+}
+.el-input.is-disabled .el-input__inner,
+.el-textarea.is-disabled .el-textarea__inner{
+  color:$g-disabled-text-color!important;
+  background-color:$g-disabled-background!important;
+}
+
+
+/* dialog
+---------------------------- */
+.el-dialog{
+  .el-dialog__title{
+    font-size:$g-font-size-large !important;
+  }
+  .el-dialog__body{
+    padding:20px 40px 20px 20px !important;
+  }
+}
+
+
+/* tooltip
+---------------------------- */
+.el-tooltip__popper{
+  font-size:$g-font-size-medium !important;
+}
+
+/* popover
+---------------------------- */
+.el-popover{
+  font-size:$g-font-size-medium !important;
+  .el-popover__title{
+    font-size:$g-font-size-medium !important;
+    font-weight: bold;
+  }
+}
+
+
+
+/* table
+---------------------------- */
+.el-table{
+  font-size: $g-font-size-base !important;
+  .el-table__header thead{
+    color:$g-text-regular;
+    .el-dialog__title{
+      font-size: $g-font-size-large;
+    }
+  }
+}
+
+/* tab
+---------------------------- */
+.el-tabs{
+  .el-tabs__item{
+    font-size: $g-font-size-base !important;
+  }
+}
+
+/* form
+---------------------------- */
+.el-form{
+  .el-form-item__label,
+  .el-form-item__content{
+    font-size: $g-font-size-base;
+  }
+  .el-form-item__error{
+    font-size: $g-font-size-small;
+  }
+}
+
+/* tag
+---------------------------- */
+.el-tag{
+  font-size: $g-font-size-medium !important;
+}
+
+
+/* select
+---------------------------- */
+.el-select-dropdown__list {
+  .el-select-dropdown__item{
+    font-size: $g-font-size-medium !important;
+  }
+}
+
+/*cascader
+---------------------------- */
+.el-cascader{
+  font-size: $g-font-size-base !important;
+}
+.el-cascader-menus{
+  .el-cascader-menu__item{
+    font-size: $g-font-size-medium !important;
+  }
+}
+
+/* dropDown
+---------------------------- */
+.el-dropdown{
+  font-size: $g-font-size-base !important;
+}
+.el-dropdown-menu{
+  .el-dropdown-menu__item{
+    font-size: $g-font-size-medium !important;
+  }
+}
+
+
+/* menu
+---------------------------- */
+.el-menu-item,
+.el-submenu__title{
+  font-size: $g-font-size-medium !important;
+}
+
+/* pagination
+---------------------------- */
+.el-pagination{
+  span,.el-input__inner{
+    font-size: $g-font-size-medium !important;
+  }
+}
+
+/* tree
+---------------------------- */
+.el-tree{
+  .el-tree-node__content{
+    height: 30px;
+    .el-tree-node__expand-icon{
+      font-size: $g-font-size-base !important;
+      position: relative;
+      top:-3px;
+    }
+  }
+  .el-tree-node__label{
+    font-size: $g-font-size-base !important;
+  }
+}
+
+/* datePicker
+---------------------------- */
+.el-date-editor--datetime{
+  min-width: 240px !important;
+}
+
+/* dropdown
+---------------------------- */
+.el-dropdown .el-dropdown-link{
+  cursor: pointer;
+}

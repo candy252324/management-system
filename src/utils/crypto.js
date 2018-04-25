@@ -1,5 +1,4 @@
 import CryptoJS from 'crypto-js'
-
 function getAesString(data,key,iv){
   var key  = CryptoJS.enc.Utf8.parse(key);
   //alert(key）;

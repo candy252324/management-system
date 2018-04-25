@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/utils/auth'
-// import { ID2NAME } from '@/utils/id2name'
+import { ID2NAME } from '@/utils/id2name'
 
 
 NProgress.configure({ showSpinner: false })
@@ -12,6 +12,7 @@ NProgress.configure({ showSpinner: false })
 const whiteList = [
   '/login',
   '/dashboard',
+  '/authredirect'
 ]
 
 router.beforeEach((to, from, next) => {
@@ -30,7 +31,7 @@ router.beforeEach((to, from, next) => {
             router.addRoutes(store.getters.allowedRouter)
             next({ ...to, replace: true })
           })
-          // ID2NAME();
+          ID2NAME();
         }).catch((reason) => {
           // console.log("%c获取用户信息失败，清除token,回到登陆页：","color:green;")
           store.dispatch('FedLogOut').then(() => {
@@ -40,20 +41,20 @@ router.beforeEach((to, from, next) => {
         })
       }else {
         //console.log("%c存在token,且存在用户信息，直接去目标页面：","color:green;")
-        next()
+         next()
       }
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) {
       // console.log("%c不存在token,但是在白名单，直接进入：","color:green;")
-      // if(!store.getters.allRouter.length){
-      //   store.dispatch('getPermission').then(()=>{
-      //     router.addRoutes(store.getters.allowedRouter)
-      //   })
-      // }
-      // if(!Object.keys(store.getters.clientData.user).length){
-      //   ID2NAME();
-      // }
+      if(!store.getters.allRouter.length){
+        store.dispatch('getPermission').then(()=>{
+          router.addRoutes(store.getters.allowedRouter)
+        })
+      }
+      if(!Object.keys(store.getters.clientData.user).length){
+        ID2NAME();
+      }
       next()
     } else {
       //console.log("%c不存在token,重定向到登录页：","color:green;")

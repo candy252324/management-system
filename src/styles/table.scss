@@ -1,0 +1,49 @@
+//全局表格样式
+.table-wrap{
+  margin:10px;
+  outline:1px solid #ddd;
+  .c-tool{
+    background: $g-toolbar-background;
+    .plain-ct{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding:0 10px;
+      .search-box{
+        display: flex;
+        .search-item{
+          margin-right: 10px;
+        }
+      }
+      i{
+        font-size:16px;
+      }
+    }
+    .action-ct{
+      padding:0 10px;
+    }
+  }
+  .pagination-container{
+    display: flex;
+    justify-content: center;
+    padding:10px;
+    background: #fff;
+  }
+}
+
+@import './mixin-fixedTabel.scss';
+#app .main-container{
+  position: relative;
+  height: 100vh;
+  .main >.table-wrap{
+    @include fixed-table;
+    top:85px;
+  }
+}
+#app .dashboard-container{
+   position: relative;
+   height: 100vh;
+   >.table-wrap{
+     @include fixed-table;
+  }
+ }

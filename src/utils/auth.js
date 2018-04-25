@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'token'
-const expires = 30   //30天的有效期
+const TokenKey = 'mes-token'
+const expires = 30
 
 export function getToken() {
   return Cookies.get(TokenKey)

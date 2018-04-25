@@ -502,3 +502,14 @@ export function compare(x, y) {
   }
 }
 
+
+//滚动加载增加序号
+
+export function addIndex(arr,page,lmit){
+  if(!arr.length)return
+  arr.forEach((val,index) => {
+    val.Index = index + ( page-1 ) * lmit + 1
+  });
+  return arr
+}
+
