@@ -1,34 +1,36 @@
 <template>
-  <div>
-    <div class="left"></div>
-    <div class="top"></div>
-    <router-view/>
+  <div class="layout" :class="{ 'hide-sidebar':!sidebarStatus}">
+    <sidebar></sidebar>
+    <div class="main-container">
+      <sticky>
+        <navbar></navbar>
+        <tags-view></tags-view>
+      </sticky>
+      <main-body></main-body>
+    </div>
   </div>
 </template>
 
 <script>
+  import Sticky from '@/components/sticky'
+  import Navbar from './Navbar'
+  import Sidebar from './sidebar'
+  import TagsView from './TagsView'
+  import MainBody from './MainBody'
+
   export default {
+    components:{ Sticky,Navbar, Sidebar, TagsView ,MainBody },
     data() {
       return {}
-    }
+    },
+    computed:{
+      sidebarStatus(){
+        return !!this.$store.getters.sidebarStatus;
+      },
+    },
   }
 </script>
 
 <style scoped>
-  .left{
-    width:250px;
-    height: 100vh;
-    background: rgba(0,0,0,.2);
-    position: absolute;
-    left:0;
-    top:0;
-  }
-  .top{
-    position: absolute;
-    top:0;
-    right:0;
-    left:250px;
-    height: 50px;
-    background: rgba(0,0,0,.2);
-  }
+
 </style>
