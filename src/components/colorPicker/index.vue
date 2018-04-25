@@ -44,12 +44,12 @@
 
         if (!this.chalk) {
           //方法1. 需要联网，根据element-ui 版本换肤
-          // const url = `https://unpkg.com/element-ui@${version}/lib/theme-chalk/index.css`
-          // this.getCSSString(url, chalkHandler, 'chalk')
+          const url = `https://unpkg.com/element-ui@${version}/lib/theme-chalk/index.css`
+          this.getCSSString(url, chalkHandler, 'chalk')
 
           //方法2. 直接引入当前版本的样式文件
-          let variable='chalk'
-          this[variable]=elementTheme.replace(/@font-face{[^}]+}/, '')
+          // let variable='chalk'
+          // this[variable]=elementTheme.replace(/@font-face{[^}]+}/, '')
         } else {
           chalkHandler()
         }
@@ -77,9 +77,7 @@
         const xhr = new XMLHttpRequest()
         xhr.onreadystatechange = () => {
           if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.responseText)
             this[variable] = xhr.responseText.replace(/@font-face{[^}]+}/, '')
-            console.log(this[variable])
             callback()
           }
         }

@@ -1,4 +1,6 @@
-import * as util from '@/utils'
+import Mock from 'mockjs'
+import { param2Obj,getIndexById } from "@/utils"
+
 const list=[
   {
     F_ID:"111",
@@ -15,11 +17,11 @@ const list=[
     //   {id:"323",menuId:156,name:"增加菜单",url:"/menu/add",method:"post"},
     //   {id:"324",menuId:156,name:"修改菜单",url:"/menu/edit",method:"post"},
     // ],
-    F_CreateTime:util.getCurTime(),
+    F_CreateTime:Mock.mock("@datetime"),
     F_CreateUserId:"111",
-    F_ModifyTime:util.getCurTime(),
+    F_ModifyTime:Mock.mock("@datetime"),
     F_ModifyUserId:"222",
-    F_DeleteTime:util.getCurTime(),
+    F_DeleteTime:Mock.mock("@datetime"),
     F_DeleteUserId:"333",
     F_Description:"",
   },
@@ -33,11 +35,11 @@ const list=[
     //   {id:"321",menuId:35,name:"查询账户",url:"/account/detail",method:"get"},
     //   {id:"325",menuId:156,name:"查看菜单",url:"/menu/detail",method:"get"},
     // ],
-    F_CreateTime:util.getCurTime(),
+    F_CreateTime:Mock.mock("@datetime"),
     F_CreateUserId:"333",
-    F_ModifyTime:util.getCurTime(),
+    F_ModifyTime:Mock.mock("@datetime"),
     F_ModifyUserId:"222",
-    F_DeleteTime:util.getCurTime(),
+    F_DeleteTime:Mock.mock("@datetime"),
     F_DeleteUserId:"333",
     F_Description:"",
   },
@@ -51,11 +53,11 @@ const list=[
     //   {id:"321",menuId:35,name:"查询账户",url:"/account/detail",method:"get"},
     //   {id:"325",menuId:156,name:"查看菜单",url:"/menu/detail",method:"get"},
     // ],
-    F_CreateTime:util.getCurTime(),
+    F_CreateTime:Mock.mock("@datetime"),
     F_CreateUserId:"222",
-    F_ModifyTime:util.getCurTime(),
+    F_ModifyTime:Mock.mock("@datetime"),
     F_ModifyUserId:"222",
-    F_DeleteTime:util.getCurTime(),
+    F_DeleteTime:Mock.mock("@datetime"),
     F_DeleteUserId:"333",
     F_Description:"",
   }
@@ -64,18 +66,16 @@ const list=[
 
 export default {
   getList:config=>{
-    const { page, limit, prop ,order,searchWord } = util.param2Obj(config.url)
+    const { page, limit, prop ,order,searchWord } = param2Obj(config.url)
     let mockList=list;
     if (order === 'descending') {
       mockList = list.reverse()
     }
-    // if(searchWord){
-    //   mockList=mockList.filter((item)=>{
-    //     return item.WorkId.indexOf(searchWord)>-1
-    //       ||item.Account.indexOf(searchWord)>-1
-    //       ||item.RealName.indexOf(searchWord)>-1;
-    //   })
-    // }
+    if(searchWord){
+      mockList=mockList.filter((item)=>{
+        return item.F_FullName.indexOf(searchWord)>-1
+      })
+    }
     const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
     var obj={list:pageList,total:mockList.length}
     return JSON.stringify(obj);
@@ -83,11 +83,11 @@ export default {
   submitForm:config=>{
     var item=JSON.parse(config.body)
     if(!item.F_ID){
-      item.F_ID=util.randomString();
-      item.F_CreateTime=util.getCurTime();
+      item.F_ID=Mock.mock("@guid");
+      item.F_CreateTime=Mock.mock("@now");
       list.push(item)
     }else{
-      var index=util.getIndexById(list,item.F_ID,"F_ID");
+      var index=getIndexById(list,item.F_ID,"F_ID");
       if(index!==undefined){
         list.splice(index,1,item)
       }
@@ -96,7 +96,7 @@ export default {
   },
   delItem:config=>{
     var {F_ID}=JSON.parse(config.body);
-    var index=util.getIndexById(list,F_ID,"F_ID");
+    var index=getIndexById(list,F_ID,"F_ID");
     if(index!==undefined){
       list.splice(index,1)
     }

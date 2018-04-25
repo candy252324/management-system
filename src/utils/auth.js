@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'mes-token'
+const TokenKey = 'x-token'
 const expires = 30
 
 export function getToken() {

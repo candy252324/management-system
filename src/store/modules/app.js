@@ -3,10 +3,10 @@ import Cookies from 'js-cookie'
 const app = {
   state: {
     sidebar: {
-      opened: !+Cookies.get('mes-sidebarStatus')
+      opened: !+Cookies.get('sidebarStatus')
     },
-    language: Cookies.get('mes-language') || 'zhCN',
-    themeColor:Cookies.get('mes-themeColor') || '#409eff',
+    language: Cookies.get('language') || 'zhCN',
+    themeColor:Cookies.get('themeColor') || '#409eff',
     clientData:{
       user:{},   //用户
       role:{},    //角色
@@ -16,24 +16,23 @@ const app = {
       maintainWay:{},  //保养方式
       fault:{},     //故障
     },
-    intervalTime:3600*1000  // 数据刷新间隔时间
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
       if (state.sidebar.opened) {
-        Cookies.set('mes-sidebarStatus', 1)
+        Cookies.set('sidebarStatus', 1)
       } else {
-        Cookies.set('mes-sidebarStatus', 0)
+        Cookies.set('sidebarStatus', 0)
       }
       state.sidebar.opened = !state.sidebar.opened
     },
     SET_LANGUAGE: (state, language) => {
       state.language = language
-      Cookies.set('mes-language', language)
+      Cookies.set('language', language)
     },
     SET_THEME:(state,color)=>{
       state.themeColor = color;
-      Cookies.set('mes-themeColor', color)
+      Cookies.set('themeColor', color)
     },
     ID2NAME:(state,d)=>{
       state.clientData = d;

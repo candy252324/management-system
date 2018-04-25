@@ -4,7 +4,7 @@
       <el-form-item label-width="0">
         <el-col :span="11">
           <el-form-item :label="$t('account.Account')" prop="WorkId">
-            <el-input v-model="formData.WorkId" :disabled="actionType===2"></el-input>
+            <el-input v-model="formData.Account" :disabled="actionType===2"></el-input>
           </el-form-item>
         </el-col>
         <el-col class="c-space" :span="2">-</el-col>
@@ -60,25 +60,20 @@
         </el-col>
       </el-form-item>
 
-      <el-form-item :label="$t('account.skill')">
-        <el-checkbox v-model="formData.Train" :disabled="actionType===2">{{$t('account.Train')}}</el-checkbox>
-        <el-checkbox v-model="formData.Independent" :disabled="actionType===2">{{$t('account.Independent')}}</el-checkbox>
-        <el-checkbox v-model="formData.Instructor" :disabled="actionType===2">{{$t('account.Instructor')}}</el-checkbox>
-        <el-checkbox v-model="formData.Trainer" :disabled="actionType===2">{{$t('account.Trainer')}}</el-checkbox>
+
+      <el-form-item label-width="0">
+        <el-col :span="11">
+          <el-form-item :label="$t('account.NickName')">
+            <el-input v-model="formData.NickName" :disabled="actionType===2"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col class="c-space" :span="2">-</el-col>
+        <el-col :span="11">
+          <el-form-item :label="$t('account.Email')">
+            <el-input v-model="formData.Email" :disabled="actionType===2"></el-input>
+          </el-form-item>
+        </el-col>
       </el-form-item>
-      <!--<el-form-item label-width="0">-->
-        <!--<el-col :span="11">-->
-          <!--<el-form-item :label="$t('account.NickName')">-->
-            <!--<el-input v-model="formData.NickName" :disabled="actionType===2"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</el-col>-->
-        <!--<el-col class="c-space" :span="2">-</el-col>-->
-        <!--<el-col :span="11">-->
-          <!--<el-form-item :label="$t('account.Email')">-->
-            <!--<el-input v-model="formData.Email" :disabled="actionType===2"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</el-col>-->
-      <!--</el-form-item>-->
 
       <el-form-item v-if="actionType===2" label-width="0">
         <el-col :span="11">

@@ -48,10 +48,10 @@
       fit highlight-current-row
     >
       <el-table-column type="index"  width="50"></el-table-column>
-      <!--<el-table-column prop="Account" label="账号" width="90"></el-table-column>-->
-      <el-table-column prop="WorkId" :label="$t('account.WorkId')" width="120" sortable="custom"></el-table-column>
+      <el-table-column prop="Account" :label="$t('account.Account')" width="140"></el-table-column>
+      <!--<el-table-column prop="WorkId" :label="$t('account.WorkId')" width="140" sortable="custom"></el-table-column>-->
       <el-table-column prop="RealName" :label="$t('account.RealName')" width="140" sortable="custom"></el-table-column>
-      <!--<el-table-column prop="NickName" :label="$t('account.NickName')" width="140" sortable="custom"></el-table-column>-->
+      <el-table-column prop="NickName" :label="$t('account.NickName')" width="140" sortable="custom"></el-table-column>
       <el-table-column prop="Gender" :label="$t('account.Gender')" width="80" sortable="custom">
         <template slot-scope="scope">
           {{scope.row.Gender?$t("account.male"):$t("account.female")}}
@@ -64,37 +64,9 @@
       </el-table-column>
       <!--<el-table-column prop="departmentId" label="部门" width="100" sortable></el-table-column>-->
       <el-table-column prop="Mobile" :label="$t('account.Mobile')" width="150" sortable="custom"></el-table-column>
-      <!--<el-table-column prop="Email" :label="$t('account.Email')" width="220" sortable="custom" show-overflow-tooltip></el-table-column>-->
+      <el-table-column prop="Email" :label="$t('account.Email')" width="220" sortable="custom" show-overflow-tooltip></el-table-column>
       <!--<el-table-column prop="dutyId" label="岗位" width="100"></el-table-column>-->
-      <el-table-column prop="Birthday" :label="$t('account.Birthday')" width="150" sortable="custom">
-        <template slot-scope="scope">
-          {{scope.row.Birthday?scope.row.Birthday.substr(0,10):""}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="Train" :label="$t('account.Train')" sortable="custom" width="120">
-        <template slot-scope="scope">
-          <span v-if="scope.row.Train" class="yes"></span>
-          <span v-else class="no"></span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="Independent" :label="$t('account.Independent')" sortable="custom" width="120">
-        <template slot-scope="scope">
-          <span v-if="scope.row.Independent" class="yes"></span>
-          <span v-else class="no"></span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="Instructor" :label="$t('account.Instructor')" sortable="custom" width="120">
-        <template slot-scope="scope">
-          <span v-if="scope.row.Instructor" class="yes"></span>
-          <span v-else class="no"></span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="Trainer" :label="$t('account.Trainer')" sortable="custom" width="120">
-        <template slot-scope="scope">
-          <span v-if="scope.row.Trainer" class="yes"></span>
-          <span v-else class="no"></span>
-        </template>
-      </el-table-column>
+      <el-table-column prop="Birthday" :label="$t('account.Birthday')" width="150" sortable="custom"></el-table-column>
       <el-table-column prop="F_Description" :label="$t('account.F_Description')" sortable="custom" show-overflow-tooltip></el-table-column>
     </el-table>
 

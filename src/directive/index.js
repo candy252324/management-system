@@ -27,24 +27,3 @@ Vue.directive('loadmore', {
   }
 })
 
-Vue.directive('readonly',{
-  update(el,binding){
-    let input = el.getElementsByTagName("input")||[];
-    let area = el.getElementsByTagName("textarea")||[];
-    let arr = [...input,...area];
-    if(binding.value){
-      Array.from(arr).forEach(val => {val.setAttribute('disabled','disabled');})
-    }else{
-      Array.from(arr).forEach(val => {val.removeAttribute('disabled','disabled')})
-    }
-  }
-})
-// 表格滚动条自动回顶部
-Vue.directive('scroll',{
-  update(el,binding){
-    // console.log('我是指令的:'+binding.value)
-    if(binding.value){
-      el.querySelector('.el-table__body-wrapper').scrollTop = 0
-    }
-  }
-})

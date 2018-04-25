@@ -1,30 +1,27 @@
-import * as util from '@/utils'
 import Mock from 'mockjs'
+import { param2Obj,getIndexById } from "@/utils"
+
 var list=[];
 var count=80;
 for (let i = 0; i < count; i++) {
   list.push(Mock.mock({
-    F_ID:util.randomString(),
-    // Account:"@first",
+    F_ID:"@guid",
+    Account:"@cname",
     Password:"eZmnlZbNOGu+je9Ok9KLOA==",
-    RealName:"@last",
+    RealName:"@cname",
     NickName:"@last",
     WorkId:"A-"+"@increment",
     Gender:Math.random()>0.5?1:0,
-    DepartmentId:util.randomString(),
-    DutyId:util.randomString(),
+    DepartmentId:"@guid",
+    DutyId:"@guid",
     'RoleId|1':["111","222","333","444"],
     Mobile:'@integer(10000000000, 19999999999)',
-    'Train|1':[0,1],             //培训
-    'Independent|1':[0,1],       //独立作业
-    'Instructor|1':[0,1],        //教导员
-    'Trainer|1':[0,1],           //培训师
 
     F_CreateTime:"@datetime",
-    'F_EnableMark|':[true,false],
-    F_Description:"@title(5, 10)",
+    'F_EnableMark|1':[true,false],
+    F_Description:"@csentence(5, 10)",
 
-    Email:"15687464@qq.com",
+    Email:"@email",
     Avatar:"",
     Birthday:"@date",
     'F_CreateUserId|1':["111","222","333","444"],
@@ -40,18 +37,17 @@ var Info=list[0];
 
 export default {
   getList:config=>{
-    const { page, limit, prop ,order,searchWord } = util.param2Obj(config.url)
+    const { page, limit, prop ,order,searchWord } = param2Obj(config.url)
     let mockList=list;
     if (order === 'descending') {
       mockList = list.reverse()
     }
-    // if(searchWord){
-    //   mockList=mockList.filter((item)=>{
-    //     return item.WorkId.indexOf(searchWord)>-1
-    //           ||item.Account.indexOf(searchWord)>-1
-    //           ||item.RealName.indexOf(searchWord)>-1;
-    //   })
-    // }
+    if(searchWord){
+      mockList=mockList.filter((item)=>{
+        return item.Account.indexOf(searchWord)>-1
+              ||item.RealName.indexOf(searchWord)>-1;
+      })
+    }
     const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
     var obj={list:pageList,total:mockList.length}
     return JSON.stringify(obj);
@@ -60,11 +56,11 @@ export default {
     var item=JSON.parse(config.body)
     Info=item;
     if(!item.F_ID){
-      item.F_ID=util.randomString();
-      item.F_CreateTime=util.getCurTime();
+      item.F_ID=Mock.mock("@guid");
+      item.F_CreateTime=Mock.mock('@now')
       list.push(item)
     }else{
-      var index=util.getIndexById(list,item.F_ID,"F_ID");
+      var index=getIndexById(list,item.F_ID,"F_ID");
       if(index!==undefined){
         list.splice(index,1,item)
       }
@@ -73,14 +69,14 @@ export default {
   },
   delItem:config=>{
     var {F_ID}=JSON.parse(config.body);
-    var index=util.getIndexById(list,F_ID,"F_ID");
+    var index=getIndexById(list,F_ID,"F_ID");
     if(index!==undefined){
       list.splice(index,1)
     }
     return JSON.stringify({code:1,message:"操作成功！"});
   },
   getDetail:config=>{
-    const { F_ID,num } = util.param2Obj(config.url)
+    const { F_ID,num } = param2Obj(config.url)
     return list[0];
   },
   changePsw:config=>{
@@ -139,12 +135,12 @@ export default {
     const { Account,Password } = JSON.parse(config.body);
     var obj={
       code:1,
-      token:util.randomString(),
+      token:"@guid",
     }
     return JSON.stringify(obj);
   },
   getUserInfo: config => {
-    const { token } = util.param2Obj(config.url)
+    const { token } = param2Obj(config.url)
 
     var detail={
       RoleGrade: 0 ,

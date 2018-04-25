@@ -6,8 +6,7 @@
         <breadcrumb></breadcrumb>
       </div>
       <div class="right">
-        <!--<timer class="timer"></timer>-->
-        <!--<lang-select class="lang navbar-item"></lang-select>-->
+        <lang-select class="lang navbar-item"></lang-select>
         <screenfull class="screenfull navbar-item"></screenfull>
         <color-picker class="navbar-item"></color-picker>
 
@@ -170,9 +169,6 @@
     .right{
       display: flex;
       align-items: center;
-      .timer{
-        margin-right:30px;
-      }
       .navbar-item{
         margin:0 10px;
         .el-dropdown-link{
