@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getList(params) {
   return request({
-    url: '/User/Get',
+    url: '/user',
     method: 'get',
     params
   })
@@ -10,43 +10,29 @@ export function getList(params) {
 
 export function submitForm(data) {
   return request({
-    url: '/User/SubmitForm',
+    url: '/user/submit',
     method: 'post',
     data
-  })
-}
-export function getDetail(params) {
-  return request({
-    url: '/User/Detail',
-    method: 'get',
-    params
   })
 }
 
 export function delItem(data) {
   return request({
-    url: '/User/Delete',
+    url: '/user/del',
     method: 'post',
     data
   })
 }
 export function changePsw(data) {
   return request({
-    url: '/User/Password',
+    url: '/user/psw',
     method: 'post',
     data
   })
 }
-// export function getOptions(params) {
-//   return request({
-//     url: '/User/GetOptions',
-//     method: 'get',
-//     params
-//   })
-// }
 export function getTreeOptions(params) {
   return request({
-    url: '/User/GetTreeOptions',
+    url: '/user/treeOptions',
     method: 'get',
     params
   })

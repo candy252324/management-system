@@ -4,7 +4,7 @@ import Mock from 'mockjs'
 import id2nameAPI from './id2name'
 
 //基础设置
-import accountAPI from './account'
+import userAPI from './user'
 import roleAPI from './role'
 import menuAPI from './menu'
 import buttonAPI from './buttonManage'
@@ -14,22 +14,21 @@ import buttonAPI from './buttonManage'
 Mock.mock(/\/ClientsData\/GetClientsDataJson/, 'get', id2nameAPI.getList)
 
 //登陆
-Mock.mock(/\/Login\/Login/, 'post', accountAPI.login)
-Mock.mock(/\/Login\/UserInfo/, 'get', accountAPI.getUserInfo)
-Mock.mock(/\/Login\/Logout/, 'post', accountAPI.logout)
+Mock.mock(/\/login/, 'post', userAPI.login)
+Mock.mock(/\/login\/info/, 'get', userAPI.getUserInfo)
+Mock.mock(/\/login\/logout/, 'post', userAPI.logout)
 
 //用户管理
-Mock.mock(/\/User\/Get\b/, 'get', accountAPI.getList)
-Mock.mock(/\/User\/SubmitForm/, 'post', accountAPI.submitForm)
-Mock.mock(/\/User\/Detail/, 'get', accountAPI.getDetail)
-Mock.mock(/\/User\/Delete/, 'post', accountAPI.delItem)
-Mock.mock(/\/User\/Password/, 'post', accountAPI.changePsw)
-Mock.mock(/\/User\/GetTreeOptions/, 'get', accountAPI.getTreeOptions)
+Mock.mock(/\/user\b/, 'get', userAPI.getList)
+Mock.mock(/\/user\/submit/, 'post', userAPI.submitForm)
+Mock.mock(/\/user\/del/, 'post', userAPI.delItem)
+Mock.mock(/\/user\/psw/, 'post', userAPI.changePsw)
+Mock.mock(/\/user\/treeOptions/, 'get', userAPI.getTreeOptions)
 
-Mock.mock(/\/Role\/Get\b/, 'get', roleAPI.getList)
-Mock.mock(/\/Role\/SubmitForm/, 'post', roleAPI.submitForm)
-Mock.mock(/\/Role\/Delete/, 'post', roleAPI.delItem)
-Mock.mock(/\/Role\/GetOptions/, 'get', roleAPI.getOptions)
+Mock.mock(/\/role\b/, 'get', roleAPI.getList)
+Mock.mock(/\/role\/submit/, 'post', roleAPI.submitForm)
+Mock.mock(/\/role\/del/, 'post', roleAPI.delItem)
+Mock.mock(/\/role\/options/, 'get', roleAPI.getOptions)
 
 Mock.mock(/\/menu\/list/, 'get', menuAPI.getList)
 Mock.mock(/\/menu\/detail/, 'get', menuAPI.getDetail)

@@ -5,31 +5,23 @@ var list=[];
 var count=80;
 for (let i = 0; i < count; i++) {
   list.push(Mock.mock({
-    F_ID:"@guid",
-    Account:"@cname",
-    Password:"eZmnlZbNOGu+je9Ok9KLOA==",
-    RealName:"@cname",
-    NickName:"@last",
-    WorkId:"A-"+"@increment",
-    Gender:Math.random()>0.5?1:0,
-    DepartmentId:"@guid",
-    DutyId:"@guid",
-    'RoleId|1':["111","222","333","444"],
-    Mobile:'@integer(10000000000, 19999999999)',
+    _id:"@guid",
+    account:"@cname",
+    password:"eZmnlZbNOGu+je9Ok9KLOA==",
+    name:"@cname",
+    gender:"@boolean",
+    'role|1':["111","222","333","444"],
+    mobile:'@integer(10000000000, 19999999999)',
+    email:"@email",
+    avatar:"",
+    birthday:"@date",
+    enable:"@boolean",
 
-    F_CreateTime:"@datetime",
-    'F_EnableMark|1':[true,false],
-    F_Description:"@csentence(5, 10)",
-
-    Email:"@email",
-    Avatar:"",
-    Birthday:"@date",
-    'F_CreateUserId|1':["111","222","333","444"],
-    F_ModifyTime:"@datetime",
-    'F_ModifyUserId|1':["111","222","333","444"],
-    F_DeleteTime:"@datetime",
-    'F_DeleteUserId|1':["111","222","333","444"],
-    'F_DeleteMark|':[true,false],
+    'createUserId|1':["111","222","333","444"],
+    createTime:"@datetime",
+    'modifyUserId|1':["111","222","333","444"],
+    modifyTime:"@datetime",
+    extra:"@csentence(5, 10)",
   }))
 }
 
@@ -55,33 +47,29 @@ export default {
   submitForm:config=>{
     var item=JSON.parse(config.body)
     Info=item;
-    if(!item.F_ID){
-      item.F_ID=Mock.mock("@guid");
+    if(!item._id){
+      item._id=Mock.mock("@guid");
       item.F_CreateTime=Mock.mock('@now')
       list.push(item)
     }else{
-      var index=getIndexById(list,item.F_ID,"F_ID");
+      var index=getIndexById(list,item._id,"_id");
       if(index!==undefined){
         list.splice(index,1,item)
       }
     }
-    return JSON.stringify({code:1,message:"操作成功！"});
+    return { code:0 }
   },
   delItem:config=>{
-    var {F_ID}=JSON.parse(config.body);
-    var index=getIndexById(list,F_ID,"F_ID");
+    var {_id}=JSON.parse(config.body);
+    var index=getIndexById(list,_id,"_id");
     if(index!==undefined){
       list.splice(index,1)
     }
-    return JSON.stringify({code:1,message:"操作成功！"});
-  },
-  getDetail:config=>{
-    const { F_ID,num } = param2Obj(config.url)
-    return list[0];
+    return { code:0 }
   },
   changePsw:config=>{
     var {Password,NewPassword}=JSON.parse(config.body);
-    return JSON.stringify({code:1,message:"操作成功！"});
+    return { code:0 }
   },
   getTreeOptions:config=>{
     var child1=[
@@ -132,22 +120,26 @@ export default {
 
   //登陆相关
   login: config => {
-    const { Account,Password } = JSON.parse(config.body);
+    const { account,password } = JSON.parse(config.body);
     var obj={
-      code:1,
-      token:"@guid",
+      code:0,
+      result:{
+        token: "11fetg1fa4sf55",
+      }
     }
-    return JSON.stringify(obj);
+    return obj;
   },
   getUserInfo: config => {
     const { token } = param2Obj(config.url)
-
-    var detail={
-      RoleGrade: 0 ,
-      Info:JSON.stringify(Info)
-    };
-    //detail.resources=JSON.stringify(detail.resources);
-    return JSON.stringify(detail);
+    var obj={
+      code:0,
+      result:{
+        account: "candy"  ,
+        roleGrade: 0 ,        // 权限等级, Number
+        avatar: "" ,
+      }
+    }
+    return obj;
   },
   logout: config => {
     const { token } = JSON.parse(config.body);

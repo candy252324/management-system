@@ -80,10 +80,10 @@
         return this.$store.getters.sidebar;
       },
       userName(){
-        return this.$store.getters.userInfo.NickName||this.$store.getters.userInfo.WorkId;
+        return this.$store.getters.account;
       },
       avatar(){
-        return this.$store.getters.userInfo.Avatar||this.$store.getters.defaultAvatar;
+        return this.$store.getters.avatar||this.$store.getters.defaultAvatar;
       }
     },
     methods:{

@@ -1,4 +1,6 @@
-import * as util from '@/utils'
+import Mock from 'mockjs'
+import { param2Obj,getIndexById,item2Tree,deepClone } from "@/utils"
+
 const list=[
   {
     id: "2",
@@ -166,17 +168,17 @@ const list=[
 
 export default {
   getList:config=>{
-    var _list=util.deepClone(list)
-    var menuTree=util.item2Tree(_list,"parentId")
+    var _list=deepClone(list)
+    var menuTree=item2Tree(_list,"parentId")
     return JSON.stringify(menuTree);
   },
   submitForm:config=>{
     var item=JSON.parse(config.body)
     if(!item.id){
-      item.id=util.randomString();
+      item.id=Mock.mock("@guid");
       list.push(item)
     }else{
-      var index=util.getIndexById(list,item.id);
+      var index=getIndexById(list,item.id);
       if(index!==undefined){
         list.splice(index,1,item)
       }
@@ -184,8 +186,8 @@ export default {
     return {status:1};
   },
   getDetail:config=>{
-    var {id}=util.param2Obj(config.url)
-    var detail=util.getItemById(list,id,"F_ID")
+    var {id}=param2Obj(config.url)
+    var detail=getItemById(list,id,"F_ID")
     return JSON.stringify(detail)
   },
   delItem:config=>{
@@ -195,7 +197,7 @@ export default {
         return {status:2,msg:"该项目下存在子项目，请先处理子项目"}
       }
     }
-    var index=util.getIndexById(list,id);
+    var index=getIndexById(list,id);
     if(index!==undefined){
       list.splice(index,1)
       return {status:1}

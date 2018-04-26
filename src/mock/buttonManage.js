@@ -1,5 +1,6 @@
-import { param2Obj,getItemById } from '@/utils'
-import * as util from '@/utils'
+import Mock from 'mockjs'
+import { param2Obj,getIndexById } from "@/utils"
+
 const list=[
     {id:"315",menuId:33,name:"新增角色",url:"/role/form",method:"post"},
     {id:"316",menuId:33,name:"修改角色",url:"/role/edit",method:"post"},
@@ -32,10 +33,10 @@ export default {
   submitForm:config=>{
     var item=JSON.parse(config.body)
     if(!item.id){
-      item.id=util.randomString();
+      item.id=Mock.mock("@guid")
       list.push(item)
     }else{
-      var index=util.getIndexById(list,item.id);
+      var index=getIndexById(list,item.id);
       if(index!==undefined){
         list.splice(index,1,item)
       }
@@ -44,7 +45,7 @@ export default {
   },
   delItem:config=>{
     var {id}=JSON.parse(config.body);
-    var index=util.getIndexById(list,id);
+    var index=getIndexById(list,id);
     if(index!==undefined){
       list.splice(index,1)
       return {status:1}

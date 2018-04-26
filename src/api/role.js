@@ -2,28 +2,28 @@ import request from '@/utils/request'
 
 export function getList(params) {
   return request({
-    url: '/Role/Get',
+    url: '/role',
     method: 'get',
     params
   })
 }
 export function submitForm(data) {
   return request({
-    url: '/Role/SubmitForm',
+    url: '/role/submit',
     method: 'post',
     data
   })
 }
 export function delItem(data) {
   return request({
-    url: '/Role/Delete',
+    url: '/role/del',
     method: 'post',
     data
   })
 }
 export function getOptions(params) {
   return request({
-    url: '/Role/GetOptions',
+    url: '/role/options',
     method: 'get',
     params
   })

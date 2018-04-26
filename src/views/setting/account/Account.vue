@@ -108,7 +108,7 @@
   import DialogForm from './Form'
   import PswForm from './PswForm'
   import { tableCommon,tableEdit }  from '@/mixin/table'
-  import { getList,submitForm,delItem } from '@/api/account'
+  import { getList,submitForm,delItem } from '@/api/user'
   import { ID2NAME } from '@/utils/id2name'
   import {encrypt} from '@/utils/crypto'
   import { deepClone } from "@/utils"
@@ -137,9 +137,9 @@
       getList(r){
         this.loading=true;
         getList(this.listQuery).then((res)=>{
-          var d=JSON.parse(res.data);
-          this.list=d.list;
-          this.total=d.total;
+          var d=res.data;
+          this.list=d.result.list;
+          this.total=d.result.total;
           this.loading=false;
           if(r==="refresh"){
             var msg=this.$t('form.isNew')

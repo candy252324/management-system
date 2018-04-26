@@ -277,22 +277,6 @@ export function deepClone(source) {
 
 
 
-//生成随机字符串"a2aed19f-e962-4a7f-ba7a-8cc74bb6900e"
-export function randomString(){
-  var len = 36;
-  var str = 'abcdefghijkmnopqrstuwxyz23456789';
-  var maxPos = str.length;
-  var pwd = '';
-  for (var i = 0; i < len; i++) {
-    if (i == 8 || i == 13 || i == 18 || i == 23) {
-      pwd += "-";
-    } else {
-      pwd += str.charAt(Math.floor(Math.random() * maxPos));
-    }
-
-  }
-  return pwd;
-}
 
 export function getCurTime (ignore_minute,source) {
   var myDate;
@@ -390,15 +374,6 @@ export function item2Tree(array, ckey) {
 }
 
 
-//获取json长度
-export function getJsonLen(obj){
-  if(typeof(obj)!=="object")return 0;
-  var n=0;
-  for(var key in obj){
-    n++;
-  }
-  return n
-}
 //数组去重
 export function noRepeatArr (arr) {
   var newArr = [];
@@ -461,55 +436,5 @@ export function getItemById(list,id,ckey){
     }
   }
   return detail;
-}
-
-// 当前时间转变成字符串以便表格命名
-export function getNowToString() {
-  var date = new Date();
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
-  var strDate = date.getDate();
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var seconds = date.getSeconds();
-  if (month >= 1 && month <= 9) {
-      month = "0" + month;
-  };
-  if (strDate >= 0 && strDate <= 9) {
-      strDate = "0" + strDate;
-  };
-  if (hours >= 0 && hours <= 9) {
-      hours = "0" + hours;
-  };
-  if (minutes >= 0 && minutes <= 9) {
-      minutes = "0" + minutes;
-  };
-  if (seconds >= 0 && seconds <= 9) {
-      seconds = "0" + seconds;
-  };
-  var currentdate = year  + month  + strDate  + hours  +  minutes  + seconds;
-  return currentdate;
-}
-
-//排序函数
-export function compare(x, y) {
-  if (x < y) {
-      return -1;
-  } else if (x > y) {
-      return 1;
-  } else {
-      return 0;
-  }
-}
-
-
-//滚动加载增加序号
-
-export function addIndex(arr,page,lmit){
-  if(!arr.length)return
-  arr.forEach((val,index) => {
-    val.Index = index + ( page-1 ) * lmit + 1
-  });
-  return arr
 }
 
