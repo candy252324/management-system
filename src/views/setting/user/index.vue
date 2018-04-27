@@ -6,14 +6,14 @@
       :title="$t('form.tip')"
       width="230"
       trigger="hover"
-      :content="$t('account.addTip')+`${originPassword}`">
+      :content="$t('user.addTip')+`${originPassword}`">
     </el-popover>
     <table-toolbar :startAction.sync="startAction">
       <div slot="plain" class="plain-ct" >
         <div class="search-box" >
           <div class="search-item">
             <el-input clearable
-              :placeholder="$t('account.search')"
+              :placeholder="$t('user.searchWord')"
               v-model.trim="listQuery.searchWord"
               @keyup.enter.native="search"
               prefix-icon="el-icon-search">
@@ -22,7 +22,6 @@
         </div>
         <el-button-group>
           <el-button type="primary" size="small" icon="el-icon-plus" @click="showDialog(0)" v-has="'add'" v-popover:popover>{{$t('table.add')}}</el-button>
-          <!--<el-button type="primary" size="small" icon="el-icon-upload2">导入</el-button>-->
           <!--<el-button type="primary" size="small" icon="el-icon-download">导出</el-button>-->
           <el-button type="primary" size="small" icon="el-icon-refresh" @click="refresh"></el-button>
         </el-button-group>
@@ -48,26 +47,22 @@
       fit highlight-current-row
     >
       <el-table-column type="index"  width="50"></el-table-column>
-      <el-table-column prop="Account" :label="$t('account.Account')" width="140"></el-table-column>
-      <!--<el-table-column prop="WorkId" :label="$t('account.WorkId')" width="140" sortable="custom"></el-table-column>-->
-      <el-table-column prop="RealName" :label="$t('account.RealName')" width="140" sortable="custom"></el-table-column>
-      <el-table-column prop="NickName" :label="$t('account.NickName')" width="140" sortable="custom"></el-table-column>
-      <el-table-column prop="Gender" :label="$t('account.Gender')" width="80" sortable="custom">
+      <el-table-column prop="account" :label="$t('user.account')" width="140"></el-table-column>
+      <el-table-column prop="name" :label="$t('user.name')" width="140" sortable="custom"></el-table-column>
+      <el-table-column prop="gender" :label="$t('user.gender')" width="80" sortable="custom">
         <template slot-scope="scope">
-          {{scope.row.Gender?$t("account.male"):$t("account.female")}}
+          {{scope.row.gender?$t("user.male"):$t("user.female")}}
         </template>
       </el-table-column>
-      <el-table-column prop="RoleId" :label="$t('account.RoleId')" width="150" sortable>
+      <el-table-column prop="role" :label="$t('user.role')" width="150" sortable>
         <template slot-scope="scope">
-          {{formatClientData("role",scope.row.RoleId)}}
+          {{formatClientData("role",scope.row.role)}}
         </template>
       </el-table-column>
-      <!--<el-table-column prop="departmentId" label="部门" width="100" sortable></el-table-column>-->
-      <el-table-column prop="Mobile" :label="$t('account.Mobile')" width="150" sortable="custom"></el-table-column>
-      <el-table-column prop="Email" :label="$t('account.Email')" width="220" sortable="custom" show-overflow-tooltip></el-table-column>
-      <!--<el-table-column prop="dutyId" label="岗位" width="100"></el-table-column>-->
-      <el-table-column prop="Birthday" :label="$t('account.Birthday')" width="150" sortable="custom"></el-table-column>
-      <el-table-column prop="F_Description" :label="$t('account.F_Description')" sortable="custom" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="mobile" :label="$t('user.mobile')" width="150" sortable="custom"></el-table-column>
+      <el-table-column prop="email" :label="$t('user.email')" width="220" sortable="custom" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="birthday" :label="$t('user.birthday')" width="150" sortable="custom"></el-table-column>
+      <el-table-column prop="extra" :label="$t('user.extra')" sortable="custom" show-overflow-tooltip></el-table-column>
     </el-table>
 
     <div class="pagination-container">
@@ -114,7 +109,7 @@
   import { deepClone } from "@/utils"
 
   export default {
-    name:"account",
+    name:"user",
     mixins: [tableCommon,tableEdit],
     components:{ DialogForm, PswForm },
     data() {
@@ -137,13 +132,15 @@
       getList(r){
         this.loading=true;
         getList(this.listQuery).then((res)=>{
-          var d=res.data;
-          this.list=d.result.list;
-          this.total=d.result.total;
-          this.loading=false;
-          if(r==="refresh"){
-            var msg=this.$t('form.isNew')
-            this.$message.success(msg)
+          if(res.data.code===0){
+            let d=res.data.result;
+            this.list=d.list;
+            this.total=d.total;
+            this.loading=false;
+            if(r==="refresh"){
+              var msg=this.$t('form.isNew')
+              this.$message.success(msg)
+            }
           }
         })
       },
@@ -167,8 +164,7 @@
           }
         }
         submitForm(formData).then(res=>{
-          var d=JSON.parse(res.data)
-          if(d.code===1){
+          if(res.data.code===0){
             this.rowData={};
             this.dialogVisible=false;
             this.pswDialogVisible=false;
@@ -180,16 +176,15 @@
         })
       },
       del(){
-        if(!this.rowData.F_ID) return;
+        if(!this.rowData._id) return;
         this.$confirm(this.$t('form.del'),this.$t('form.tip'),{ type:'warning',closeOnClickModal:false,beforeClose:(action, instance, done)=>{
             if(action==="confirm"){
               instance.confirmButtonLoading = true;
               instance.confirmButtonText = this.$t('form.going');
-              delItem({F_ID:this.rowData.F_ID}).then(res=>{
-                var d=JSON.parse(res.data)
+              delItem({_id:this.rowData._id}).then(res=>{
                 done();
                 instance.confirmButtonLoading = false;
-                if(d.code===1){
+                if(res.data.code===0){
                   this.rowData={};
                   this.getList();
                   ID2NAME();
@@ -204,19 +199,3 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  .cell .yes{
-    display: inline-block;
-    width:22px;
-    height: 22px;
-    border-radius: 50%;
-    background: radial-gradient(50% 50%, #fff,$g-success);
-  }
-  .cell .no{
-    display: inline-block;
-    width:22px;
-    height: 22px;
-    border-radius: 50%;
-    background: #eee;
-  }
-</style>

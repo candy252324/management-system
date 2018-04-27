@@ -126,7 +126,7 @@ const list=[
     name: '用户管理',
     parentId:"1",
     parentName:'基础设置',
-    route:"/setting/account",
+    route:"/setting/user",
   },
   {
     id: "156",

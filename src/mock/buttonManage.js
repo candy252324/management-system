@@ -7,10 +7,10 @@ const list=[
     {id:"317",menuId:33,name:"删除角色",url:"/role/del",method:"post"},
     {id:"318",menuId:33,name:"查看角色",url:"/role/theDetails",method:"get"},
 
-    {id:"319",menuId:35,name:"增加账户",url:"/account/form",method:"post"},
-    {id:"320",menuId:35,name:"修改账户",url:"/account/edit",method:"post"},
-    {id:"321",menuId:35,name:"查询账户",url:"/account/theDetails",method:"get"},
-    {id:"322",menuId:35,name:"删除账户",url:"/account/del",method:"post"},
+    {id:"319",menuId:35,name:"增加账户",url:"/user/form",method:"post"},
+    {id:"320",menuId:35,name:"修改账户",url:"/user/edit",method:"post"},
+    {id:"321",menuId:35,name:"查询账户",url:"/user/theDetails",method:"get"},
+    {id:"322",menuId:35,name:"删除账户",url:"/user/del",method:"post"},
 
     {id:"323",menuId:156,name:"增加菜单",url:"/menu/form",method:"post"},
     {id:"324",menuId:156,name:"修改菜单",url:"/menu/edit",method:"post"},

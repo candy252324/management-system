@@ -19,8 +19,8 @@ export default[
       // { path: 'organize', name: 'organize', component: _import('setting/Organize'), meta: { title: 'organize' }},
       // { path: 'area', name: 'area', component: _import('setting/Area'), meta: { title: 'area' }},
       // { path: 'duty', name: 'duty', component: _import('setting/Duty'), meta: { title: 'duty' }},
-      { path: 'role', name: 'role', component: _import('setting/role/Role'), meta: { title: 'role',roleGrade:[0] }},
-      { path: 'account', name: 'account', component: _import('setting/account/Account'), meta: { title: 'account',roleGrade:[0] }},
+      { path: 'role', name: 'role', component: _import('setting/role/index'), meta: { title: 'role',roleGrade:[0,1] }},
+      { path: 'user', name: 'user', component: _import('setting/user/index'), meta: { title: 'user',roleGrade:[0,1] }},
       // { path: 'menu', name: 'menu', component: _import('setting/menu/Menu'), meta: { title: '系统菜单' }},
     ]
   },

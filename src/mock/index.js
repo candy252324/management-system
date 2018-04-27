@@ -1,4 +1,7 @@
 import Mock from 'mockjs'
+Mock.setup({
+  timeout: "200-1000"
+})
 
 //id转名字
 import id2nameAPI from './id2name'
@@ -19,13 +22,14 @@ Mock.mock(/\/login\/info/, 'get', userAPI.getUserInfo)
 Mock.mock(/\/login\/logout/, 'post', userAPI.logout)
 
 //用户管理
-Mock.mock(/\/user\b/, 'get', userAPI.getList)
+Mock.mock(/\/user\/list/, 'get', userAPI.getList)
 Mock.mock(/\/user\/submit/, 'post', userAPI.submitForm)
+Mock.mock(/\/user\/detail/, 'get', userAPI.getDetail)
 Mock.mock(/\/user\/del/, 'post', userAPI.delItem)
 Mock.mock(/\/user\/psw/, 'post', userAPI.changePsw)
 Mock.mock(/\/user\/treeOptions/, 'get', userAPI.getTreeOptions)
 
-Mock.mock(/\/role\b/, 'get', roleAPI.getList)
+Mock.mock(/\/role\/list/, 'get', roleAPI.getList)
 Mock.mock(/\/role\/submit/, 'post', roleAPI.submitForm)
 Mock.mock(/\/role\/del/, 'post', roleAPI.delItem)
 Mock.mock(/\/role\/options/, 'get', roleAPI.getOptions)

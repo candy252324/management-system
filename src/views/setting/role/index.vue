@@ -5,7 +5,7 @@
         <div class="search-box" >
           <div class="search-item">
             <el-input clearable
-              :placeholder="$t('role.F_FullName')"
+              :placeholder="$t('role.name')"
               v-model.trim="listQuery.searchWord"
               @keyup.enter.native="search"
               prefix-icon="el-icon-search">
@@ -34,15 +34,15 @@
       fit highlight-current-row
     >
       <el-table-column type="index"  width="50"></el-table-column>
-      <el-table-column prop="F_FullName" :label="$t('role.F_FullName')" width="180" sortable="custom"></el-table-column>
-      <el-table-column prop="RoleGrade" :label="$t('role.RoleGrade')" width="140" sortable="custom">
+      <el-table-column prop="name" :label="$t('role.name')" width="180" sortable="custom"></el-table-column>
+      <el-table-column prop="grade" :label="$t('role.grade')" width="140" sortable="custom">
         <template slot-scope="scope">
-          <el-tag :type='scope.row.RoleGrade==1?"danger":scope.row.RoleGrade==2?"success":"primary"'>
-            {{scope.row.RoleGrade==1?"高级":scope.row.RoleGrade==2?"中级":"初级"}}
+          <el-tag :type='scope.row.grade==1?"danger":scope.row.grade==2?"success":"primary"'>
+            {{scope.row.grade==1?"高级":scope.row.grade==2?"中级":"初级"}}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="F_Description" :label="$t('role.F_Description')" sortable="custom" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="extra" :label="$t('role.extra')" sortable="custom" show-overflow-tooltip></el-table-column>
     </el-table>
 
     <div class="pagination-container">
@@ -100,13 +100,15 @@
       getList(r){
         this.loading=true;
         getList(this.listQuery).then((res)=>{
-          var d=JSON.parse(res.data);
-          this.list=d.list;
-          this.total=d.total;
-          this.loading=false;
-          if(r==="refresh"){
-            var msg=this.$t('form.isNew')
-            this.$message.success(msg)
+          if(res.data.code===0){
+            let d=res.data.result;
+            this.list=d.list;
+            this.total=d.total;
+            this.loading=false;
+            if(r==="refresh"){
+              var msg=this.$t('form.isNew')
+              this.$message.success(msg)
+            }
           }
         })
       },
@@ -114,32 +116,45 @@
         if(!this.$refs.Form.validate()) return;
         var formData=deepClone(this.$refs.Form.formData);
         submitForm(formData).then(res=>{
-          var d=JSON.parse(res.data)
-          if(d.code===1){
+          if(res.data.code===0){
             this.rowData={};
             this.dialogVisible=false;
             this.getList();
             ID2NAME();
           }
+          // var d=JSON.parse(res.data)
+          // if(d.code===1){
+          //   this.rowData={};
+          //   this.dialogVisible=false;
+          //   this.getList();
+          //   ID2NAME();
+          // }
         }).catch(err=>{
           console.log(err)
         })
       },
       del(){
-        if(!this.rowData.F_ID) return;
+        if(!this.rowData._id) return;
         this.$confirm(this.$t('form.del'),this.$t('form.tip'),{ type:'warning',closeOnClickModal:false,beforeClose:(action, instance, done)=>{
             if(action==="confirm"){
               instance.confirmButtonLoading = true;
               instance.confirmButtonText = this.$t('form.going');
-              delItem({F_ID:this.rowData.F_ID}).then(res=>{
-                var d=JSON.parse(res.data)
-                done();
-                instance.confirmButtonLoading = false;
-                if(d.code===1){
+              delItem({_id:this.rowData._id}).then(res=>{
+                if(res.data.code===0){
+                  done();
+                  instance.confirmButtonLoading = false;
                   this.rowData={};
                   this.getList();
                   ID2NAME();
                 }
+                // var d=JSON.parse(res.data)
+                // done();
+                // instance.confirmButtonLoading = false;
+                // if(d.code===0){
+                //   this.rowData={};
+                //   this.getList();
+                //   ID2NAME();
+                // }
               })
             }else{
               done();

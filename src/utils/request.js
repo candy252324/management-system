@@ -22,21 +22,21 @@ service.interceptors.request.use(config => {
 
 service.interceptors.response.use(
   response => {
-    // var method=response.config.method.toLowerCase();
-    // if(method!=="post") return response;
-    //
-    // var url=response.config.url;
-    // if( url.indexOf("login")===-1){
-    //   const res=response.data?JSON.parse(response.data):"";
-    //   if(res.code===1){
-    //     Message.success($t("1"));
-    //     // ID2NAME();
-    //   }else{
-    //     if(res.code!=undefined){
-    //       Message.error($t(res.code.toString()));
-    //     }
-    //   }
-    // }
+    var method=response.config.method.toLowerCase();
+    if(method!=="post") return response;
+
+    var url=response.config.url;
+    if( url.indexOf("login")===-1){
+      let res=response.data;
+      if(res.code===0){
+        Message.success($t("0"));
+        // ID2NAME();
+      }else{
+        if(res.code!=undefined){
+          Message.error($t(res.code.toString()));
+        }
+      }
+    }
     return response;
     },
   /**

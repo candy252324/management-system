@@ -42,7 +42,7 @@ export default {
     }
     const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
     var obj={list:pageList,total:mockList.length}
-    return JSON.stringify(obj);
+    return {code:0,result:obj};
   },
   submitForm:config=>{
     var item=JSON.parse(config.body)
@@ -65,7 +65,7 @@ export default {
     if(index!==undefined){
       list.splice(index,1)
     }
-    return { code:0 }
+    return { code:1 }
   },
   changePsw:config=>{
     var {Password,NewPassword}=JSON.parse(config.body);
@@ -134,9 +134,15 @@ export default {
     var obj={
       code:0,
       result:{
-        account: "candy"  ,
-        roleGrade: 0 ,        // 权限等级, Number
-        avatar: "" ,
+        roleGrade: 1 ,        // 权限等级, Number
+        account: Mock.mock("@first") ,         // 账号
+        name: Mock.mock("@cname"),            // 姓名
+        gender : Mock.mock("@boolean"),          // 性别
+        role: "111" ,            // 角色id
+        avatar: "" ,          // 头像
+        mobile: Mock.mock("@integer(13000000000,19999999999)"),
+        email: Mock.mock("@email") ,
+        birthday: Mock.mock("@date"),
       }
     }
     return obj;

@@ -100,7 +100,7 @@ function setCustomDirective(roleGrade){
 
 function getHashMenus(menus){
   let dealRoute=function(route) {
-    var routeArr = route.split("/") //["","setting","account"]
+    var routeArr = route.split("/") //["","setting","user"]
     if (!routeArr[0]) {
       routeArr.splice(0, 1)
     }
@@ -110,7 +110,7 @@ function getHashMenus(menus){
       }else {
         routeArr[i] = routeArr[i - 1] + "/" + routeArr[i]
       }
-      //console.log(routeArr[i])   //  "/setting"  "/setting/account"
+      //console.log(routeArr[i])   //  "/setting"  "/setting/user"
       if(!hashMenus[routeArr[i]]){
         hashMenus[routeArr[i]]=true;
       }
@@ -118,7 +118,7 @@ function getHashMenus(menus){
   }
   var hashMenus={};
   for (var i=0;i<menus.length;i++){
-    var route=menus[i].route   //  "/setting/account"
+    var route=menus[i].route   //  "/setting/user"
     if(!route){continue;}
     dealRoute(route);
   }

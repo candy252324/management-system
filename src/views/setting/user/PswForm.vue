@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-form :model="formData" ref="form" :rules="rules">
-      <el-form-item :label="$t('account.Password')" :label-width="formLabelWidth" prop="psw1">
+      <el-form-item :label="$t('user.password')" :label-width="formLabelWidth" prop="psw1">
         <el-input v-model.trim="formData.psw1" type="password" required></el-input>
       </el-form-item>
-      <el-form-item :label="$t('account.pswConfirm')" :label-width="formLabelWidth" prop="psw2">
+      <el-form-item :label="$t('user.pswConfirm')" :label-width="formLabelWidth" prop="psw2">
         <el-input v-model.trim="formData.psw2" type="password" required></el-input>
       </el-form-item>
     </el-form>

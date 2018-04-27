@@ -25,7 +25,8 @@ export const tableCommon = {
     //更改每页显示数据条数
     handleSizeChange(val) {
       this.listQuery.limit = val;
-      this.listQuery.page===1?this.getList():this.listQuery.page=1;
+      this.listQuery.page=1;
+      this.getList();
     },
     //更改当前页
     handleCurrentChange(val) {

@@ -3,14 +3,14 @@
     <el-form :model="formData" :rules="rules" ref="form"  :label-width="formLabelWidth">
       <el-form-item label-width="0">
         <el-col :span="11">
-          <el-form-item :label="$t('role.F_FullName')" prop="F_FullName">
-            <el-input v-model.trim="formData.F_FullName" :disabled="actionType===2"></el-input>
+          <el-form-item :label="$t('role.name')" prop="name">
+            <el-input v-model.trim="formData.name" :disabled="actionType===2"></el-input>
           </el-form-item>
         </el-col>
         <el-col class="c-space" :span="1">-</el-col>
         <el-col :span="11">
-          <el-form-item :label="$t('role.RoleGrade')" prop="RoleGrade">
-            <el-select :disabled="actionType===2" v-model="formData.RoleGrade"  clearable>
+          <el-form-item :label="$t('role.grade')" prop="grade">
+            <el-select :disabled="actionType===2" v-model="formData.grade"  clearable>
               <el-option
                 v-for="item in gradeOptions"
                 :key="item.value"
@@ -33,32 +33,32 @@
       </el-form-item>
       <el-form-item v-if="actionType===2" label-width="0">
         <el-col :span="11">
-          <el-form-item :label="$t('role.F_CreateUserId')">
-            <el-input :value="formatClientData('user',formData.F_CreateUserId)" disabled></el-input>
+          <el-form-item :label="$t('role.createUserId')">
+            <el-input :value="formatClientData('user',formData.createUserId)" disabled></el-input>
           </el-form-item>
         </el-col>
         <el-col class="c-space" :span="1">-</el-col>
         <el-col :span="11">
-          <el-form-item :label="$t('role.F_CreateTime')">
-            <el-input v-model="formData.F_CreateTime" disabled></el-input>
+          <el-form-item :label="$t('role.createTime')">
+            <el-input v-model="formData.createTime" disabled></el-input>
           </el-form-item>
         </el-col>
       </el-form-item>
       <el-form-item v-if="actionType===2" label-width="0">
         <el-col :span="11">
-          <el-form-item :label="$t('role.F_ModifyUserId')">
-            <el-input :value="formatClientData('user',formData.F_ModifyUserId)" disabled></el-input>
+          <el-form-item :label="$t('role.modifyUserId')">
+            <el-input :value="formatClientData('user',formData.modifyUserId)" disabled></el-input>
           </el-form-item>
         </el-col>
         <el-col class="c-space" :span="1">-</el-col>
         <el-col :span="11">
-          <el-form-item :label="$t('role.F_ModifyTime')">
-            <el-input v-model="formData.F_ModifyTime" disabled></el-input>
+          <el-form-item :label="$t('role.modifyTime')">
+            <el-input v-model="formData.modifyTime" disabled></el-input>
           </el-form-item>
         </el-col>
       </el-form-item>
-      <el-form-item :label="$t('role.F_Description')">
-        <el-input type="textarea" :rows="3" v-model.trim="formData.F_Description" :disabled="actionType===2"></el-input>
+      <el-form-item :label="$t('role.extra')">
+        <el-input type="textarea" :rows="3" v-model.trim="formData.extra" :disabled="actionType===2"></el-input>
       </el-form-item>
     </el-form>
   </div>
@@ -74,10 +74,10 @@
       return {
         formData:{},
         rules: {
-          F_FullName: [
+          name: [
             { required: true, message: '请输入权限名称', trigger: 'blur' },
           ],
-          RoleGrade: [
+          grade: [
             { required: true, message: '请设置权限等级', trigger: 'change' }
           ],
         },

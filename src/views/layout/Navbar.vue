@@ -60,7 +60,7 @@
   import Information from '@/views/personal/Information'
   import ChangePswDialog from '@/views/personal/changePsw'
 
-  //import {changePsw} from '@/api/account' //引入api中的方法，导致其它页面空白，故而提交操作都dispatch到store中处理
+  //import {changePsw} from '@/api/user' //引入api中的方法，导致其它页面空白，故而提交操作都dispatch到store中处理
   import {encrypt} from '@/utils/crypto'
 
   export default {
@@ -80,10 +80,10 @@
         return this.$store.getters.sidebar;
       },
       userName(){
-        return this.$store.getters.account;
+        return this.$store.getters.userInfo.account;
       },
       avatar(){
-        return this.$store.getters.avatar||this.$store.getters.defaultAvatar;
+        return this.$store.getters.userInfo.avatar||this.$store.getters.defaultAvatar;
       }
     },
     methods:{
