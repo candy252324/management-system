@@ -123,11 +123,27 @@
             });
             break;
           case "3":
-            this.$confirm("确认退出吗？","提示",{type:"warning"}).then(()=>{
-              this.$store.dispatch('LogOut').then(() => {
-                location.reload()   //防止路由重复挂载
-              })
-            }).catch(()=>{})
+            this.$confirm("确认退出吗？","提示",{
+              type:'warning',
+              confirmButtonText: this.$t('form.ensure'),
+              cancelButtonText: this.$t('form.cancel'),
+              closeOnClickModal:false,
+              beforeClose:(action, instance, done)=>{
+                if(action==="confirm"){
+                  instance.confirmButtonLoading = true;
+                  instance.confirmButtonText = this.$t('form.going');
+                  instance.cancelButtonClass="is-disabled";
+                    this.$store.dispatch('LogOut').then(() => {
+                      instance.confirmButtonLoading = false;
+                      instance.cancelButtonClass="";
+                      done();
+                      location.reload()   //防止路由重复挂载
+                    })
+                }else{
+                  if(instance.confirmButtonLoading){ return; }
+                  done()
+                }
+              }}).then(()=>{}).catch(()=>{})
             break;
         }
       },

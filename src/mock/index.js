@@ -17,7 +17,7 @@ import buttonAPI from './buttonManage'
 Mock.mock(/\/ClientsData\/GetClientsDataJson/, 'get', id2nameAPI.getList)
 
 //登陆
-Mock.mock(/\/login/, 'post', userAPI.login)
+Mock.mock(/\/login\/token/, 'post', userAPI.login)
 Mock.mock(/\/login\/info/, 'get', userAPI.getUserInfo)
 Mock.mock(/\/login\/logout/, 'post', userAPI.logout)
 
