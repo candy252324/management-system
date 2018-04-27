@@ -42,6 +42,7 @@ export const tableEdit = {
   components:{ TableToolbar },
   data(){
     return {
+      dialogLoading:false,
       startAction:false,      //控制table-toolbar状态
       actionType:undefined,   //0新增 1修改 2查看
       dialogTitle:"",
@@ -74,6 +75,19 @@ export const tableEdit = {
       this.$nextTick(() => {
         this.$refs.Form.setFormData(this.rowData);
       });
+    },
+    handleCloseDialog(done){
+      if(this.dialogLoading){
+        return;
+      }else{
+        //按"X"图标关闭
+        if(typeof(done)==="function"){
+          done();
+          return;
+        }
+        //按“取消”按钮关闭
+        this.dialogVisible=false;
+      }
     },
   },
 

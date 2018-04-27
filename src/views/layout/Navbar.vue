@@ -28,11 +28,18 @@
       width="800px"
       append-to-body
       :visible.sync="showInfo"
-      :close-on-click-modal=false>
-      <information ref="InfoForm"></information>
+      :close-on-click-modal=false
+      :before-close="handleCloseDialog">
+      <information
+        ref="InfoForm"
+        v-loading="dialogLoading"
+      ></information>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="showInfo = false">{{$t('form.cancel')}}</el-button>
-        <el-button type="primary" @click="changeInfo">{{$t('form.confirm')}}</el-button>
+        <el-button @click="handleCloseDialog" :disabled="dialogLoading">{{$t('form.cancel')}}</el-button>
+        <el-button type="primary" @click="changeInfo" :disabled="dialogLoading">
+          <span v-show="!dialogLoading">{{$t("form.confirm")}}</span>
+          <span v-show="dialogLoading"><i class="el-icon-loading"></i> {{$t("form.going")}}</span>
+        </el-button>
       </div>
     </el-dialog>
 
@@ -40,11 +47,18 @@
       width="500px"
       append-to-body
       :visible.sync="showPsw"
-      :close-on-click-modal=false>
-      <change-psw-dialog  ref="PswForm"></change-psw-dialog>
+      :close-on-click-modal=false
+      :before-close="handleCloseDialog">
+      <change-psw-dialog
+        ref="PswForm"
+        v-loading="dialogLoading"
+      ></change-psw-dialog>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="showPsw = false">{{$t('form.cancel')}}</el-button>
-        <el-button type="primary" @click="changePsw">{{$t('form.confirm')}}</el-button>
+        <el-button @click="handleCloseDialog" :disabled="dialogLoading">{{$t('form.cancel')}}</el-button>
+        <el-button type="primary" @click="changePsw" :disabled="dialogLoading">
+          <span v-show="!dialogLoading">{{$t("form.confirm")}}</span>
+          <span v-show="dialogLoading"><i class="el-icon-loading"></i> {{$t("form.going")}}</span>
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -66,6 +80,7 @@
   export default {
     data(){
       return{
+        dialogLoading:false,
         showInfo:false,   //个人信息
         showPsw:false,   //修改密码
         formLabelWidth:80,
@@ -118,11 +133,13 @@
       },
       changePsw(){
         if(!this.$refs.PswForm.validate()) return;
+        this.dialogLoading=true;
         var Password=encrypt(this.$refs.PswForm.formData.psw);
         var NewPassword=encrypt(this.$refs.PswForm.formData.psw1);
         var obj={ Password,NewPassword}
         this.$store.dispatch("ChangePsw",obj).then(()=>{
           this.showPsw=false;
+          this.dialogLoading=false;
           this.$store.dispatch('FedLogOut').then(() => {
             this.$router.replace("/login")
           })
@@ -132,17 +149,31 @@
       },
       changeInfo(){
         if(!this.$refs.InfoForm.validate()) return;
+        this.dialogLoading=true;
         var formData=this.$refs.InfoForm.formData;
         formData.Avatar=this.$refs.InfoForm.imageUrl;
         this.$store.dispatch("ChangeInfo",formData).then(()=>{
           this.showInfo=false;
+          this.dialogLoading=false;
           this.$store.dispatch("getUserInfo",formData).then(()=>{
 
           })
         }).catch(err=>{
           console.log(err)
         })
-      }
+      },
+      handleCloseDialog(done){
+        if(this.dialogLoading){
+          return;
+        }else{
+          if(typeof(done)==="function"){
+            done();
+            return;
+          }
+          this.showInfo=false;
+          this.showPsw=false;
+        }
+      },
     },
     components:{
       Hamburger,

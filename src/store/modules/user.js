@@ -81,7 +81,7 @@ export default{
           if(res.data.code===0){
             resolve()
           }else{
-            reject(d.code+":")
+            reject("error code:"+d.code)
           }
         }).catch(err=>{
           reject(err)
@@ -94,7 +94,7 @@ export default{
           if(res.data.code===0){
             resolve()
           }else{
-            reject(d.code+":")
+            reject("error code:"+d.code)
           }
         }).catch(err=>{
           reject(err)

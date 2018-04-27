@@ -44,6 +44,11 @@ textarea{
   max-height: 410px;
   overflow-y: auto;
 }
+.el-form .el-form-item{
+  .el-date-editor{
+    width:100%;
+  }
+}
 .el-form .form-tips{
   display: block !important;
   color:$g-danger;

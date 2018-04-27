@@ -1,5 +1,5 @@
 <template>
-  <div class="table-wrap">
+  <div class="table-wrap" v-loading="loading">
     <el-popover
       ref="popover"
       placement="left"
@@ -40,12 +40,9 @@
 
     <el-table
       :data="list"
-      :default-sort = "{prop: 'createDate', order: 'descending'}"
       @row-click="handleRowClick"
       @sort-change="handleSortChange"
-      v-loading="loading"
-      fit highlight-current-row
-    >
+      fit highlight-current-row>
       <el-table-column type="index"  width="50"></el-table-column>
       <el-table-column prop="account" :label="$t('user.account')" width="140"></el-table-column>
       <el-table-column prop="name" :label="$t('user.name')" width="140" sortable="custom"></el-table-column>
@@ -78,22 +75,42 @@
       </el-pagination>
     </div>
 
-    <el-dialog width="40%" :title="dialogTitle" :visible.sync="dialogVisible"  :close-on-click-modal="false">
+    <el-dialog
+      width="45%"
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
+      :before-close="handleCloseDialog">
       <dialog-form
         ref="Form"
         :actionType="actionType"
+        v-loading="dialogLoading"
       ></dialog-form>
       <div slot="footer" class="dialog-footer" v-if="actionType!==2">
-        <el-button @click="dialogVisible=false">{{$t('form.cancel')}}</el-button>
-        <el-button type="primary" @click="confirm">{{$t('form.confirm')}}</el-button>
+        <el-button @click="handleCloseDialog" :disabled="dialogLoading">{{$t('form.cancel')}}</el-button>
+        <el-button type="primary" @click="confirm" :disabled="dialogLoading">
+          <span v-show="!dialogLoading">{{$t("form.confirm")}}</span>
+          <span v-show="dialogLoading"><i class="el-icon-loading"></i> {{$t("form.going")}}</span>
+        </el-button>
       </div>
     </el-dialog>
 
-    <el-dialog width="30%" :title="$t('table.reset')" :visible.sync="pswDialogVisible"  :close-on-click-modal="false">
-      <psw-form ref="PswForm"></psw-form>
+    <el-dialog
+      width="30%"
+      :title="$t('table.reset')"
+      :visible.sync="pswDialogVisible"
+      :close-on-click-modal="false"
+      :before-close="closePswDialog">
+      <psw-form
+        ref="PswForm"
+        v-loading="dialogLoading"
+      ></psw-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="pswDialogVisible=false">{{$t('form.cancel')}}</el-button>
-        <el-button type="primary" @click="confirm(1)">{{$t('form.reset')}}</el-button>
+        <el-button @click="closePswDialog" :disabled="dialogLoading">{{$t('form.cancel')}}</el-button>
+        <el-button type="primary" @click="confirm(1)" :disabled="dialogLoading">
+          <span v-show="!dialogLoading">{{$t("form.confirm")}}</span>
+          <span v-show="dialogLoading"><i class="el-icon-loading"></i> {{$t("form.going")}}</span>
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -129,6 +146,19 @@
       this.getList();
     },
     methods: {
+      closePswDialog(done){
+        if(this.dialogLoading){
+          return;
+        }else{
+          //按"X"图标关闭
+          if(typeof(done)==="function"){
+            done();
+            return;
+          }
+          //按“取消”按钮关闭
+          this.pswDialogVisible=false;
+        }
+      },
       getList(r){
         this.loading=true;
         getList(this.listQuery).then((res)=>{
@@ -145,14 +175,16 @@
         })
       },
       confirm(type){
-        var formData;
+        let formData;
         if(type==1){
           if(!this.$refs.PswForm.validate()) return;
+          this.dialogLoading=true;
           var NewPassword=encrypt(this.$refs.PswForm.formData.psw1);
           formData=deepClone(this.rowData);
           formData.Password=NewPassword
         }else{
           if(!this.$refs.Form.validate()) return;
+          this.dialogLoading=true;
           formData=deepClone(this.$refs.Form.formData);
           formData.Train=formData.Train?1:0;
           formData.Independent=formData.Independent?1:0;
@@ -164,6 +196,7 @@
           }
         }
         submitForm(formData).then(res=>{
+          this.dialogLoading=false;
           if(res.data.code===0){
             this.rowData={};
             this.dialogVisible=false;
@@ -177,13 +210,20 @@
       },
       del(){
         if(!this.rowData._id) return;
-        this.$confirm(this.$t('form.del'),this.$t('form.tip'),{ type:'warning',closeOnClickModal:false,beforeClose:(action, instance, done)=>{
+        this.$confirm(this.$t('form.del'),this.$t('form.tip'),{
+          type:'warning',
+          confirmButtonText: this.$t('form.ensure'),
+          cancelButtonText: this.$t('form.cancel'),
+          closeOnClickModal:false,
+          beforeClose:(action, instance, done)=>{
             if(action==="confirm"){
               instance.confirmButtonLoading = true;
               instance.confirmButtonText = this.$t('form.going');
+              instance.cancelButtonClass="is-disabled";
               delItem({_id:this.rowData._id}).then(res=>{
-                done();
                 instance.confirmButtonLoading = false;
+                instance.cancelButtonClass="";
+                done();
                 if(res.data.code===0){
                   this.rowData={};
                   this.getList();
@@ -191,9 +231,10 @@
                 }
               })
             }else{
-              done();
+              if(instance.confirmButtonLoading){ return; }
+              done()
             }
-          }})
+          }}).then(()=>{}).catch(()=>{})
       },
     },
   }

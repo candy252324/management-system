@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 Mock.setup({
-  timeout: "200-1000"
+  timeout: "2000-3000"
 })
 
 //id转名字
