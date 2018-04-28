@@ -36,8 +36,8 @@ export default {
     }
     if(searchWord){
       mockList=mockList.filter((item)=>{
-        return item.Account.indexOf(searchWord)>-1
-              ||item.RealName.indexOf(searchWord)>-1;
+        return item.account.indexOf(searchWord)>-1
+              ||item.name.indexOf(searchWord)>-1;
       })
     }
     const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
@@ -65,7 +65,7 @@ export default {
     if(index!==undefined){
       list.splice(index,1)
     }
-    return { code:1 }
+    return { code:0 }
   },
   changePsw:config=>{
     var {Password,NewPassword}=JSON.parse(config.body);

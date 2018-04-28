@@ -8,7 +8,7 @@ import lang from '@/lang'
 import 'reset.css'
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/styles/index.scss'
-import '@/mock'
+// import '@/mock'
 import './permission'
 import '@/directive'
 import SvgIcon from '@/components/SvgIcon'

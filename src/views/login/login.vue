@@ -7,13 +7,13 @@
       <!--<div class="action-btn" @click="actionType=!actionType">{{actionType?"没有账号？注册一个":"直接登陆"}}</div>-->
       <el-form v-if="actionType"  :model="formData" status-icon :rules="rules" ref="loginForm">
 
-        <el-form-item  prop="Account">
+        <el-form-item  prop="account">
           <svg-icon icon-class="user" ></svg-icon>
-          <el-input  v-model="formData.Account" @focus="error=''" @keyup.enter.native="login()" autofocus></el-input>
+          <el-input  v-model="formData.account" @focus="error=''" @keyup.enter.native="login()" autofocus></el-input>
         </el-form-item>
-        <el-form-item  prop="Password">
+        <el-form-item  prop="password">
           <svg-icon icon-class="lock"></svg-icon>
-          <el-input type="password" v-model="formData.Password" @focus="error=''" @keyup.enter.native="login()"></el-input>
+          <el-input type="password" v-model="formData.password" @focus="error=''" @keyup.enter.native="login()"></el-input>
         </el-form-item>
         <el-form-item class="btn-ct">
           <el-button type="primary" @click="login()">
@@ -24,14 +24,14 @@
       </el-form>
 
       <!--<el-form v-else :model="formData" status-icon :rules="rules" ref="loginForm">-->
-      <!--<el-form-item  prop="Account">-->
-      <!--<el-input  v-model="formData.Account" auto-complete="off" prefix-icon="el-icon-search"></el-input>-->
+      <!--<el-form-item  prop="account">-->
+      <!--<el-input  v-model="formData.account" auto-complete="off" prefix-icon="el-icon-search"></el-input>-->
       <!--</el-form-item>-->
-      <!--<el-form-item  prop="Password">-->
-      <!--<el-input type="password" v-model="formData.Password" auto-complete="off" prefix-icon="el-icon-search"></el-input>-->
+      <!--<el-form-item  prop="password">-->
+      <!--<el-input type="password" v-model="formData.password" auto-complete="off" prefix-icon="el-icon-search"></el-input>-->
       <!--</el-form-item>-->
-      <!--<el-form-item  prop="Password">-->
-      <!--<el-input type="password" v-model="formData.Password" auto-complete="off" prefix-icon="el-icon-search"></el-input>-->
+      <!--<el-form-item  prop="password">-->
+      <!--<el-input type="password" v-model="formData.password" auto-complete="off" prefix-icon="el-icon-search"></el-input>-->
       <!--</el-form-item>-->
       <!--<el-form-item class="btn-ct">-->
       <!--<el-button type="primary" @click="login()">注&emsp;&emsp;册</el-button>-->
@@ -46,7 +46,6 @@
   import LangSelect from '@/components/LangSelect'
   import {encrypt} from '@/utils/crypto'
   import $t from '@/utils/$t'
-  import Particles from 'particlesjs'
 
   export default{
     components: { LangSelect },
@@ -55,8 +54,8 @@
         if (value === '') {
           callback(new Error(this.$t("login.account")));
         } else {
-          if (this.formData.Password !== '') {
-            this.$refs.loginForm.validateField('Password');
+          if (this.formData.password !== '') {
+            this.$refs.loginForm.validateField('password');
           }
           callback();
         }
@@ -77,17 +76,14 @@
         onLogin:false,
         error:'',
         formData:{
-          Account: '',
-          Password: '',
+          account: '',
+          assword: '',
         },
         rules: {
-          Account: [{  validator: validateAccount, trigger: 'blur' }],
-          Password: [{  validator: validatePassword, trigger: 'blur' }],
+          account: [{  validator: validateAccount, trigger: 'blur' }],
+          password: [{  validator: validatePassword, trigger: 'blur' }],
         },
       }
-    },
-    mounted(){
-     // this.initParticles();
     },
     methods:{
       login(){
@@ -95,18 +91,19 @@
           if (valid) {
             this.onLogin=true;
             var obj={}
-            obj.Account=this.formData.Account;
-            obj.Password=encrypt(this.formData.Password);
+            obj.account=this.formData.account;
+            obj.password=encrypt(this.formData.password);
             this.$store.dispatch('Login', obj).then(()=>{
               this.$router.push({ path: '/' })
             })
             .catch(error=>{
+              console.log(error)
               if(error.code===3000||error.code===3004){
                 this.error=$t(error.code.toString());
               }else {
                 this.error=this.$t("login.fail")
               }
-              this.$refs.loginForm.validateField('Password');
+              this.$refs.loginForm.validateField('password');
               this.onLogin=false;
             })
           }else{
@@ -115,37 +112,6 @@
           }
         })
       },
-      initParticles(){
-        Particles.init({
-          selector: '#loginBg',
-          color: '#75A5B7',//颗粒和连接线的颜色
-          maxParticles: 80,//最大数量的粒子
-          connectParticles: true,
-          minDistance:120,//px连接线的距离,默认120
-          speed:0.4,//粒子的移动速度,默认0.5
-          sizeVariations:2, //大小变化量
-          responsive:[
-            {
-              breakpoint: 768,
-              options:{
-                maxParticles: 80
-              }
-            },
-            {
-              breakpoint: 375,
-              options:{
-                maxParticles: 50
-              }
-            },
-            {
-              breakpoint: 1975,
-              options:{
-                maxParticles: 190
-              }
-            }
-          ]
-        })
-      }
     }
   }
 </script>
